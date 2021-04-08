@@ -2,11 +2,6 @@ import React , {useState} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navigation, Footer, Login, Add, Logout,Dashboard } from "./components";
 function App() {
-  const [token, setToken] = useState()
-
-  if(!token){
-    return <Login setToken={setToken}/>
-  }
   return (
     <div className="App">
       <Router>
