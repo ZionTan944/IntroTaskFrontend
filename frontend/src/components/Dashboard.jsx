@@ -1,30 +1,50 @@
+import axios from "axios";
 import React from "react";
+import './Dashboard.css'
 
-function Dashboard() {
-  return (
-    <div className="dashboard">
-      <div class="container">
-        <div class="row align-items-center my-5">
-          <div class="col-lg-7">
-            <img
-              class="img-fluid rounded mb-4 mb-lg-0"
-              src="http://placehold.it/900x400"
-              alt=""
-            />
-          </div>
-          <div class="col-lg-5">
-            <h1 class="font-weight-light">Dashboard</h1>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
-          </div>a
+class Dashboard extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      HtmlStr:``,
+
+    };
+
+  }
+
+  componentDidMount(){
+    var dataHtml = ''
+    var data = new FormData()
+    var userid = localStorage.getItem('token')
+    data.append("id",userid)
+    axios({
+      method:'GET',
+      url:"http://localhost:8000/backend/todo",
+      params:{"userid":userid}
+    })
+    // axios.get("http://localhost:8000/backend/todo",data).then((response) => { console.log(response)})
+    .then((response)=>{
+      console.log('d',response.data.data)
+      dataHtml = response.data.data.map(todoitem => (
+        <div key={ Math.random().toString(36).substr(2, 9) } class = "card">
+        <h1 class = "todotitle"><b>{todoitem.title}</b></h1>
+        <p>{todoitem.description}</p>
         </div>
-      </div>
-    </div>
-  );
+      ))
+      this.setState({HtmlStr:dataHtml})
+      
+  
+  }).then((error)=>{console.log('e',error)})
+  }
+
+  render(){
+    return(
+      <div>{this.state.HtmlStr}</div>
+    )
+  }
 }
+
 
 export default Dashboard;
