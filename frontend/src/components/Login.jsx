@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import './Login.css'
 import axios from "axios"
-import PropTypes from 'prop-types'
 
 
 class Login extends React.Component{
@@ -15,6 +14,11 @@ class Login extends React.Component{
 
     };
 
+  }
+
+  componentDidMount(){
+    localStorage.setItem('token',null)
+    // console.log('reseted', localStorage.getItem('token'))
   }
 
   SendLogin = () => {

@@ -2,6 +2,7 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
 function Navigation(props) {
+
   if (props.location.pathname === "/") {
     return (<div className="navigation"></div>)
   }
@@ -34,7 +35,7 @@ function Navigation(props) {
                   </Link>
                 </li>
                 <li
-                  class={`nav-item  ${props.location.pathname === "/" ? "active" : ""
+                 class={`nav-item  ${props.location.pathname === "/" ? "active" : ""
                     }`}
                 >
                   <Link class="nav-link" to="/">

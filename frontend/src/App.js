@@ -1,7 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { Component} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Login, Add, Logout, Dashboard } from "./components";
-import axios from "axios"
+import { Navigation, Footer, Login, Add, Dashboard } from "./components";
+
 
 
 class App extends Component {
@@ -29,7 +29,6 @@ class App extends Component {
               <Route path="/" exact component={() => <Login/>} />
               <Route path="/dashboard" exact component={() => <Dashboard />} />
               <Route path="/add" exact component={() => <Add />} />
-              <Route path="/logout" exact component={() => <Logout />} />
 
             </Switch>
             <Footer />
