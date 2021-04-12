@@ -15,9 +15,13 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount(){
+    var userid = localStorage.getItem('token')
+    // if(!userid){
+    //     return( <Login/>)
+    
+    // }
     var dataHtml = ''
     var data = new FormData()
-    var userid = localStorage.getItem('token')
     data.append("id",userid)
     axios({
       method:'GET',

@@ -16,9 +16,10 @@ class App extends Component {
 
   render() {
     const token = localStorage.getItem('token')
-    // console.log('t',token)
-    if (!token) {
-      return <Login/>
+    console.log('t',token)
+    if (token.length === 0 ) {
+      console.log('loginpage')
+      return (<Login/>)
     }
     else {
       return (

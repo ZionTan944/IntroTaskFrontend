@@ -17,7 +17,7 @@ class Login extends React.Component{
   }
 
   componentDidMount(){
-    localStorage.setItem('token',null)
+    localStorage.setItem('token','')
     // console.log('reseted', localStorage.getItem('token'))
   }
 
