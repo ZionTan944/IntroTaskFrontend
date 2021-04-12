@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import './Login.css'
 import axios from "axios"
+import PropTypes from 'prop-types'
 
-class Login extends React.Component {
+
+class Login extends React.Component{
 
   constructor(props) {
     super(props);
@@ -10,31 +12,25 @@ class Login extends React.Component {
     this.state = {
       Username: '',
       Password: '',
-      Redirect:false
+
     };
-    // this.handleChangeUsername = this.handleChangeUsername.bind(this)
-    // this.handleChangePassword = this.handleChangePassword.bind(this)
 
   }
 
-  // handleChangeUsername(event) {
-  //   this.setState({ Username: event.target.value })
-  // }
-  // handleChangePassword(event) {
-  //   this.setState({ Password: event.target.value })
-  // }
-
   SendLogin = () => {
+    var data = new FormData()
 
+    data.append("Username",this.state.Username)
+    data.append("Password",this.state.Password)
     // console.log(this.state.Username,this.state.Password)
-    axios.post("http://localhost:8000/backend/loginAPI/",
-      {
-        Username: this.state.Username,
-        Password: this.state.Password
-      }).then((response) => {
-        console.log("SUCCESS",response);
+    axios.post("http://localhost:8000/backend/login",
+      data,{headers: {'Content-Type': 'multipart/form-data'}}
+      ).then((response) => {
+
+        const token = response.data.data.id
+        console.log("SUCCESS",response,token);
+        localStorage.setItem('token',token)
         window.location.replace("http://localhost:3000/dashboard")
-        this.setState({redirect:true})
 
       }, (error) => {
         console.log(error);
@@ -42,12 +38,9 @@ class Login extends React.Component {
   }
 
   render() {
-    const {redirect} = this.state
-    if (redirect){
-      
-    }
+
     return (
-      <form>
+      <form className = "LoginForm">
         <label>
           <p>Username</p>
           <input type="text" onChange={(event) => this.setState({Username:event.target.value})} />
