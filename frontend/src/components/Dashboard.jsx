@@ -1,54 +1,37 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Dashboard.css'
 
-class Dashboard extends React.Component {
+function Dashboard() {
 
-  constructor(props) {
-    super(props);
+  const [HtmlData, setHtmlData] = useState(``)
 
-    this.state = {
-      HtmlStr:``,
-
-    };
-
-  }
-
-  componentDidMount(){
-    var userid = localStorage.getItem('token')
-    // if(!userid){
-    //     return( <Login/>)
-    
-    // }
-    var dataHtml = ''
-    var data = new FormData()
-    data.append("id",userid)
+  useEffect(() => {
+    console.log('ff',HtmlData.length)
+    if(HtmlData.length === 0 ){
     axios({
-      method:'GET',
-      url:"http://localhost:8000/backend/todo",
-      params:{"userid":userid}
+      method: 'GET',
+      url: "http://localhost:8000/backend/todo",
+      withCredentials: true
     })
-    // axios.get("http://localhost:8000/backend/todo",data).then((response) => { console.log(response)})
-    .then((response)=>{
-      console.log('d',response.data.data)
-      dataHtml = response.data.data.map(todoitem => (
-        <div key={ Math.random().toString(36).substr(2, 9) } class = "card">  
-        <h1 class = "todotitle"><b>{todoitem.title}</b></h1>
-        <p>{todoitem.description}</p>
-        </div>
-      ))
-      this.setState({HtmlStr:dataHtml})
-      
-  
-  }).then((error)=>{console.log('e',error)})
-  }
+      .then((response) => {
+        console.log('d', response.data.data)
+        var HtmlStr = response.data.data.map(todoitem => (
+          <div key={Math.random().toString(36).substr(2, 9)} class="card">
+            <h1 class="todotitle"><b>{todoitem.title}</b></h1>
+            <p>{todoitem.description}</p>
+          </div>
+        ))
+        setHtmlData(HtmlStr)
 
-  render(){
-    return(
-      <div>{this.state.HtmlStr}</div>
-    )
-  }
+
+      }).then((error) => { console.log('e', error) })
+    }
+  })
+
+  return(
+    <div>{HtmlData}</div>
+  )
+
 }
-
-
 export default Dashboard;

@@ -1,23 +1,21 @@
 import React , {useState} from "react";
 import axios from "axios"
+import { Redirect } from "react-router";
 
 function Add() {
   
   function AddData(){
     console.log('add',Title,Desc)
-    const userid = localStorage.getItem('token')
 
     var data = new FormData()
 
     data.append("Title",Title)
     data.append("Description",Desc)
-    data.append("userid",userid)
     axios.post("http://localhost:8000/backend/todo",
-      data,{headers: {'Content-Type': 'multipart/form-data'}}
+      data,{headers: {'Content-Type': 'multipart/form-data'}, withCredentials: true}
       ).then((response) => {
         console.log("SUCCESS",response);
-        window.location.replace("http://localhost:3000/dashboard")
-
+        SetSubmit(true)
       }, (error) => {
         console.log(error);
       })
@@ -28,6 +26,10 @@ function Add() {
 
   const [Title,setTitle] = useState('')
   const [Desc,setDesc] = useState('')
+  const [Submit,SetSubmit] = useState(false)
+  if (Submit === true){
+    return(<Redirect to ={{pathname: "/dashboard"}}/>)
+  }
   return (
     <form className = "AddForm">
     <label>
