@@ -1,50 +1,63 @@
-import axios from "axios";
-import React from "react";
+import React, { useEffect } from 'react'
 import './Dashboard.css'
+import { useSelector, useDispatch } from 'react-redux'
+// import getTodo from './index'
+import axios from 'axios'
+import { Redirect } from 'react-router'
 
-class Dashboard extends React.Component {
+const SET_TODO = 'settodo'
 
-  constructor(props) {
-    super(props);
+function Dashboard () {
+  const content = useSelector(state => state)
 
-    this.state = {
-      HtmlStr:``,
+  const dispatch = useDispatch()
 
-    };
-
+  function getData () {
+    return dispatch => {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:8000/backend/todo',
+        withCredentials: true
+      }).then(({ data }) => {
+        dispatch({
+          type: SET_TODO,
+          payload: data
+        })
+      })
+    }
   }
 
-  componentDidMount(){
-    var dataHtml = ''
-    var data = new FormData()
-    var userid = localStorage.getItem('token')
-    data.append("id",userid)
-    axios({
-      method:'GET',
-      url:"http://localhost:8000/backend/todo",
-      params:{"userid":userid}
-    })
-    // axios.get("http://localhost:8000/backend/todo",data).then((response) => { console.log(response)})
-    .then((response)=>{
-      console.log('d',response.data.data)
-      dataHtml = response.data.data.map(todoitem => (
-        <div key={ Math.random().toString(36).substr(2, 9) } class = "card">  
-        <h1 class = "todotitle"><b>{todoitem.title}</b></h1>
-        <p>{todoitem.description}</p>
-        </div>
-      ))
-      this.setState({HtmlStr:dataHtml})
-      
-  
-  }).then((error)=>{console.log('e',error)})
-  }
+  useEffect(() => {
+    if (content.loading !== true && content.loggedIn === true) {
+      // console.log('start')
+      dispatch(getData())
+    }
+  })
 
-  render(){
-    return(
-      <div>{this.state.HtmlStr}</div>
+  const HtmlStr = content.todos.map(todos => (
+    <div key={Math.random().toString(36).substr(2, 9)} className="card">
+      <h1 className="todotitle"><b>{todos.title}</b></h1>
+      <p>{todos.description}</p>
+    </div>
+  ))
+  if (content.loggedIn === false) {
+    return <Redirect to={{ pathname: '/' }} />
+  } else {
+    return (
+      <div>{HtmlStr}</div>
     )
   }
 }
 
-
-export default Dashboard;
+// const mapStateToProps = (state) => {
+//   return {
+//     todos: state.todos,
+//     loading: state.loading,
+//     logged_in: state.logged_in
+//   }
+// }
+// const mapDispatchToProps = {
+//   getTodo
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default Dashboard

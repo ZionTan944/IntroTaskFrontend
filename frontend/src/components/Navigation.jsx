@@ -1,44 +1,69 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
+import axios from 'axios'
 
-function Navigation(props) {
+const SET_LOGOUT = 'setlogout'
+function Navigation (props) {
+  const dispatch = useDispatch()
 
-  if (props.location.pathname === "/") {
-    return (<div className="navigation"></div>)
+  function setRefresh () {
+    dispatch({
+      type: 'seterror',
+      payload: null
+  })
   }
-  else {
-    return (
-      <div className="navigation">
-        <nav class="navbar navbar-expand navbar-dark bg-dark">
-          <div class="container">
-            <Link class="navbar-brand" to="/">
-              React Multi-Page Website
-            </Link>
 
+  function Logout () {
+    return dispatch => {
+      axios.get('http://localhost:8000/backend/logout',
+        { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+      ).then(({ data }) => {
+        dispatch({
+            type: SET_LOGOUT,
+            payload: data
+        })
+    })
+    }
+  }
+
+  function getLogout () {
+    dispatch(Logout())
+  }
+  if (props.location.pathname === '/') {
+    return (<div className="navigation"></div>)
+  } else {
+    return (
+      <div className='navigation'>
+        <nav className='navbar navbar-expand navbar-dark bg-dark'>
+          <div className='container'>
+            <Link className='navbar-brand' to='/'>
+              Introduction Task
+            </Link>
             <div>
-              <ul class="navbar-nav ml-auto">
+              <ul className='navbar-nav ml-auto'>
                 <li
-                  class={`nav-item  ${props.location.pathname === "/dashboard" ? "active" : ""
+                  className={`nav-item  ${props.location.pathname === '/dashboard' ? 'active' : ''
                     }`}
                 >
-                  <Link class="nav-link" to="/dashboard">
+                  <Link className='nav-link' to='/dashboard' onClick={() => { setRefresh() }}>
                     Dashboard
-                    <span class="sr-only">(current)</span>
+                    <span className='sr-only'>(current)</span>
                   </Link>
                 </li>
                 <li
-                  class={`nav-item  ${props.location.pathname === "/add" ? "active" : ""
+                  className={`nav-item  ${props.location.pathname === '/add' ? 'active' : ''
                     }`}
                 >
-                  <Link class="nav-link" to="/add">
+                  <Link className='nav-link' to='/add' onClick={() => { setRefresh() }}>
                     Add
                   </Link>
                 </li>
                 <li
-                 class={`nav-item  ${props.location.pathname === "/" ? "active" : ""
+                  className={`nav-item  ${props.location.pathname === '/' ? 'active' : ''
                     }`}
                 >
-                  <Link class="nav-link" to="/">
+                  <Link className='nav-link' to='/' onClick={() => { getLogout() }}>
                     Logout
                   </Link>
                 </li>
@@ -47,8 +72,8 @@ function Navigation(props) {
           </div>
         </nav>
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(Navigation);
+export default withRouter(Navigation)

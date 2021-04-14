@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react'
 
-function Footer() {
+function Footer () {
   return (
-    <div className="footer m-5">
-      <footer class="py-2 bg-dark fixed-bottom">
-        <div class="container">
-          <p class="m-0 text-center text-white">
+    <div className='footer m-5'>
+      <footer className="py-2 bg-dark fixed-bottom">
+        <div className="container">
+          <p className="m-0 text-center text-white">
             Copyright &copy; Your Website 2020
           </p>
         </div>
       </footer>
     </div>
-  );
+  )
 }
 
-export default Footer;
+export default Footer
