@@ -18,22 +18,21 @@ function Dashboard () {
         method: 'GET',
         url: 'http://localhost:8000/backend/todo',
         withCredentials: true
-    }).then(({ data }) => {
+      }).then(({ data }) => {
         dispatch({
-            type: SET_TODO,
-            payload: data
+          type: SET_TODO,
+          payload: data
         })
-    })
+      })
     }
   }
 
   useEffect(() => {
-    console.log('before start')
     if (content.loading !== true && content.loggedIn === true) {
-      console.log('start')
-       dispatch(getData())
+      // console.log('start')
+      dispatch(getData())
     }
-  }, [content.loading])
+  })
 
   const HtmlStr = content.todos.map(todos => (
     <div key={Math.random().toString(36).substr(2, 9)} className="card">
@@ -41,12 +40,11 @@ function Dashboard () {
       <p>{todos.description}</p>
     </div>
   ))
-  console.log('p', content.todos, content.loading, content.loggedIn)
   if (content.loggedIn === false) {
     return <Redirect to={{ pathname: '/' }} />
   } else {
     return (
-        <div>{HtmlStr}</div>
+      <div>{HtmlStr}</div>
     )
   }
 }

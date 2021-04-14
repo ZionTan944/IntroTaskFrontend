@@ -9,7 +9,7 @@ function Add () {
   const dispatch = useDispatch()
   const content = useSelector(state => state)
   function AddData () {
-    console.log('add', Title, Desc)
+    // console.log('add', Title, Desc)
     const data = new FormData()
 
     data.append('Title', Title)

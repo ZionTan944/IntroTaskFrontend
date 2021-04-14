@@ -7,6 +7,13 @@ const SET_LOGOUT = 'setlogout'
 function Navigation (props) {
   const dispatch = useDispatch()
 
+  function setRefresh () {
+    dispatch({
+      type: 'seterror',
+      payload: null
+  })
+  }
+
   function Logout () {
     return dispatch => {
       axios.get('http://localhost:8000/backend/logout',
@@ -39,7 +46,7 @@ function Navigation (props) {
                   className={`nav-item  ${props.location.pathname === '/dashboard' ? 'active' : ''
                     }`}
                 >
-                  <Link className='nav-link' to='/dashboard'>
+                  <Link className='nav-link' to='/dashboard' onClick={() => { setRefresh() }}>
                     Dashboard
                     <span className='sr-only'>(current)</span>
                   </Link>
@@ -48,7 +55,7 @@ function Navigation (props) {
                   className={`nav-item  ${props.location.pathname === '/add' ? 'active' : ''
                     }`}
                 >
-                  <Link className='nav-link' to='/add'>
+                  <Link className='nav-link' to='/add' onClick={() => { setRefresh() }}>
                     Add
                   </Link>
                 </li>

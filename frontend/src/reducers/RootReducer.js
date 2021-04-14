@@ -8,7 +8,7 @@ const initState = {
 }
 
 const rootReducer = (state = initState, action) => {
-    console.log('a', action)
+    // console.log('a', action)
     if (action.type === 'settodo') {
         return {
             ...state,
@@ -38,7 +38,7 @@ const rootReducer = (state = initState, action) => {
             error: action.payload
         }
     } else {
-        console.log('return state')
+        // console.log('return state')
         return state
     }
 }

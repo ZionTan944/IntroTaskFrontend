@@ -27,7 +27,6 @@ function Login (props) {
         dispatch({
             type: SET_LOGIN
         })
-    // }).catch(error => { console.log('hi', error.response.data.error.message) })
   }).catch(error => {
     dispatch({
     type: 'seterror',
@@ -42,7 +41,7 @@ function Login (props) {
 
     data.append('Username', Username)
     data.append('Password', Password)
-    console.log(Username, Password)
+    // console.log(Username, Password)
 
     dispatch(PostLogin(data))
   }
