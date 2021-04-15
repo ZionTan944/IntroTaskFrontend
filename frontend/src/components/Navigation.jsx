@@ -1,9 +1,8 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import axios from 'axios'
+import { Logout } from '../actions/action'
 
-const SET_LOGOUT = 'setlogout'
 function Navigation (props) {
   const dispatch = useDispatch()
 
@@ -12,19 +11,6 @@ function Navigation (props) {
       type: 'seterror',
       payload: null
   })
-  }
-
-  function Logout () {
-    return dispatch => {
-      axios.get('http://localhost:8000/backend/logout',
-        { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
-      ).then(({ data }) => {
-        dispatch({
-            type: SET_LOGOUT,
-            payload: data
-        })
-    })
-    }
   }
 
   function getLogout () {

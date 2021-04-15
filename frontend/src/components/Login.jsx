@@ -1,68 +1,51 @@
 import React, { useState } from 'react'
-import './Login.css'
+
 import { Redirect } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
+import { postLogin } from '../actions/action'
 
-const SET_LOGIN = 'setlogin'
-function Login (props) {
-  const content = useSelector(state => state)
+function Login () {
+  const error = useSelector(state => state.userReducer.error)
+  const loggedIn = useSelector(state => state.userReducer.loggedIn)
   const dispatch = useDispatch()
-  const [Username, SetUsername] = useState('')
-  const [Password, SetPassword] = useState('')
+  const [username, SetUsername] = useState('')
+  const [password, SetPassword] = useState('')
 
-  function ChangeUsername (event) {
+  function changeUsername (event) {
     SetUsername(event.target.value)
   }
 
-  function ChangePassword (event) {
+  function changePassword (event) {
     SetPassword(event.target.value)
-  }
-
-  function PostLogin (data) {
-    return dispatch => {
-      axios.post('http://localhost:8000/backend/login',
-        data, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
-      ).then(({ response }) => {
-        dispatch({
-            type: SET_LOGIN
-        })
-  }).catch(error => {
-    dispatch({
-    type: 'seterror',
-    payload: error.response.data.error.message
-      })
-    })
-    }
   }
 
   function SendLogin () {
     const data = new FormData()
 
-    data.append('Username', Username)
-    data.append('Password', Password)
+    data.append('Username', username)
+    data.append('Password', password)
     // console.log(Username, Password)
 
-    dispatch(PostLogin(data))
+    dispatch(postLogin(data))
   }
 
-  if (content.loggedIn === true) {
+  if (loggedIn === true) {
     return (<Redirect to ={{ pathname: '/dashboard' }}/>)
   }
   return (
     <form className="LoginForm">
-      <label>
+      <label className = 'LoginLabel'>
         <p>Username</p>
-        <input type="text" onChange={(event) => ChangeUsername(event)} />
+        <input type="text" onChange={(event) => changeUsername(event)} />
       </label>
-      <label>
+      <label className = 'LoginLabel'>
         <p>Password</p>
-        <input type="password" onChange={(event) => ChangePassword(event)} />
+        <input type="password" onChange={(event) => changePassword(event)} />
       </label>
       <div className='submitButton'>
         <button onClick={SendLogin} type="button">Submit</button>
       </div>
-      {content.error !== null && <h4>{content.error}</h4>}
+      {error !== null && <h4>{error}</h4>}
     </form>
   )
 }

@@ -1,63 +1,30 @@
 import React, { useEffect } from 'react'
-import './Dashboard.css'
 import { useSelector, useDispatch } from 'react-redux'
-// import getTodo from './index'
-import axios from 'axios'
-import { Redirect } from 'react-router'
-
-const SET_TODO = 'settodo'
+import { getData } from '../actions/action'
 
 function Dashboard () {
-  const content = useSelector(state => state)
+  const loggedIn = useSelector(state => state.userReducer.loggedIn)
+  const loading = useSelector(state => state.todoReducer.loading)
+  const todos = useSelector(state => state.todoReducer.todos)
 
   const dispatch = useDispatch()
 
-  function getData () {
-    return dispatch => {
-      axios({
-        method: 'GET',
-        url: 'http://localhost:8000/backend/todo',
-        withCredentials: true
-      }).then(({ data }) => {
-        dispatch({
-          type: SET_TODO,
-          payload: data
-        })
-      })
-    }
-  }
-
   useEffect(() => {
-    if (content.loading !== true && content.loggedIn === true) {
-      // console.log('start')
+    if (loading !== true && loggedIn === true) {
+      console.log('start')
       dispatch(getData())
     }
   })
 
-  const HtmlStr = content.todos.map(todos => (
+  const htmlStr = todos.map(todos => (
     <div key={Math.random().toString(36).substr(2, 9)} className="card">
       <h1 className="todotitle"><b>{todos.title}</b></h1>
       <p>{todos.description}</p>
     </div>
   ))
-  if (content.loggedIn === false) {
-    return <Redirect to={{ pathname: '/' }} />
-  } else {
     return (
-      <div>{HtmlStr}</div>
+      <div>{htmlStr}</div>
     )
-  }
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     todos: state.todos,
-//     loading: state.loading,
-//     logged_in: state.logged_in
-//   }
-// }
-// const mapDispatchToProps = {
-//   getTodo
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 export default Dashboard
