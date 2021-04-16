@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import { Navigation, Footer, Login, Add, Dashboard } from './components'
+import { Navigation, Footer, Login, Add, Dashboard, Delete } from './components'
 import { useSelector } from 'react-redux'
 // import { Redirect } from 'react-router'
 
@@ -15,6 +15,7 @@ function App () {
              <Route path="/" exact component={() => <Login />} />
             <Route exact path = '/dashboard'>{loggedIn ? <Dashboard/> : <Redirect to="/" /> }</Route>
             <Route exact path = '/add'>{loggedIn ? <Add/> : <Redirect to="/" /> }</Route>
+            <Route exact path="/delete/:id" >{loggedIn ? <Delete/> : <Redirect to="/" /> }</Route>
           </Switch>
           <Footer />
         </Router>
