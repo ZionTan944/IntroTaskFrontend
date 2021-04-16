@@ -21,6 +21,12 @@ const todoReducer = (state = initState, action) => {
         }
     } else if (action.type === 'setlogout') {
         return { ...initState }
+    } else if (action.type === 'setdeletetodo') {
+        return {
+            ...state,
+        loading: false,
+            error: null
+        }
     } else if (action.type === 'seterror') {
         return {
             ...state,

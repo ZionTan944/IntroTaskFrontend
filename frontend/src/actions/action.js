@@ -66,3 +66,21 @@ export const postTodo = (data) => {
           })
       }
 }
+
+const SET_DELETE_TODO = 'setdeletetodo'
+export const deleteTodo = (id) => {
+    return dispatch => {
+        axios.delete('http://localhost:8000/backend/todo/' + id,
+          { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+        ).then(({ response }) => {
+          dispatch({
+            type: SET_DELETE_TODO
+          })
+        }).catch(error => {
+          dispatch({
+          type: 'seterror',
+          payload: error.response.data.error.message
+            })
+          })
+      }
+}
