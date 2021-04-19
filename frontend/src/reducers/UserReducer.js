@@ -6,7 +6,17 @@ const initState = {
 
 const userReducer = (state = initState, action) => {
     // console.log('U', action)
-    if (action.type === 'setlogin') {
+    if (action.type === 'setsession') {
+        return {
+            ...initState,
+            loggedIn: action.payload
+        }
+    } else if (action.type === 'setsessiontrue') {
+        return {
+            ...state,
+            loading: true
+        }
+    } else if (action.type === 'setlogin') {
         return {
             ...state,
             loggedIn: true,

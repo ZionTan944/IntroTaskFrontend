@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router'
+// import { Redirect } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { postTodo } from '../actions/action'
 
@@ -22,7 +22,8 @@ function Add () {
   const [desc, setDesc] = useState('')
   // const [submit, setSubmit] = useState(false)
   if (loading === false && error === null) {
-    return (<Redirect to={{ pathname: '/dashboard' }} />)
+    console.log('hi')
+    // return (<Redirect to={{ pathname: '/dashboard' }} />)
   }
   return (
     <form className="AddForm">

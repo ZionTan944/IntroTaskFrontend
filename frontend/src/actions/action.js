@@ -102,3 +102,23 @@ export const putTodo = (data, id) => {
           })
       }
 }
+
+const SET_SESSION = 'setsession'
+export const getsession = () => {
+    return dispatch => {
+        axios.get('http://localhost:8000/backend/session'
+        , { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+        ).then(({ data }) => {
+          console.log('d', data.data.login)
+          dispatch({
+            type: SET_SESSION,
+            payload: data.data.login
+          })
+        }).catch(error => {
+          dispatch({
+          type: 'seterror',
+          payload: error.response.data.error.message
+            })
+          })
+      }
+}
