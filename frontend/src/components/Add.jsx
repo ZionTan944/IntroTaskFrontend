@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import { Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { postTodo } from '../actions/action'
 
@@ -15,15 +15,15 @@ function Add () {
     data.append('Title', title)
     data.append('Description', desc)
     dispatch(postTodo(data))
-    // setSubmit(true)
+    setSubmit(true)
   }
 
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
-  // const [submit, setSubmit] = useState(false)
-  if (loading === false && error === null) {
+  const [submit, setSubmit] = useState(false)
+  if (loading === false && error === null && submit === true) {
     console.log('hi')
-    // return (<Redirect to={{ pathname: '/dashboard' }} />)
+    return (<Redirect to={{ pathname: '/dashboard' }} />)
   }
   return (
     <form className="AddForm">
