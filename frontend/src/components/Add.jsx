@@ -6,6 +6,8 @@ import { postTodo } from '../actions/action'
 function Add () {
   const dispatch = useDispatch()
   const error = useSelector(state => state.todoReducer.error)
+  const loading = useSelector(state => state.todoReducer.loading)
+
   function AddData () {
     // console.log('add', Title, Desc)
     const data = new FormData()
@@ -13,13 +15,13 @@ function Add () {
     data.append('Title', title)
     data.append('Description', desc)
     dispatch(postTodo(data))
-    setSubmit(true)
+    // setSubmit(true)
   }
 
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
-  const [submit, setSubmit] = useState(false)
-  if (submit === true && error === null) {
+  // const [submit, setSubmit] = useState(false)
+  if (loading === false && error === null) {
     return (<Redirect to={{ pathname: '/dashboard' }} />)
   }
   return (
