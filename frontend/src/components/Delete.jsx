@@ -22,6 +22,7 @@ function Delete () {
       <div>
           <h1 className="todotitle"><b>{state.title}</b></h1>
       <p>{state.description}</p>
+      <p>Stage:{state.status}</p>
     <form className="AddForm">
       <div className='submitButton'>
         <button type="button" onClick={removeTodo}>Confirm Delete</button>

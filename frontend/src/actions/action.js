@@ -84,3 +84,21 @@ export const deleteTodo = (id) => {
           })
       }
 }
+
+const SET_PUT_TODO = 'setputtodo'
+export const putTodo = (data, id) => {
+    return dispatch => {
+        axios.put('http://localhost:8000/backend/todo/' + id,
+          data, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+        ).then(({ response }) => {
+          dispatch({
+            type: SET_PUT_TODO
+          })
+        }).catch(error => {
+          dispatch({
+          type: 'seterror',
+          payload: error.response.data.error.message
+            })
+          })
+      }
+}

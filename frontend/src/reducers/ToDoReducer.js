@@ -5,7 +5,7 @@ const initState = {
 }
 
 const todoReducer = (state = initState, action) => {
-    console.log('T', action)
+    // console.log('T', action)
     if (action.type === 'settodo') {
         return {
             ...state,
@@ -25,6 +25,12 @@ const todoReducer = (state = initState, action) => {
         return {
             ...state,
         loading: false,
+            error: null
+        }
+    } else if (action.type === 'setputtodo') {
+        return {
+            ...state,
+            loading: false,
             error: null
         }
     } else if (action.type === 'seterror') {
