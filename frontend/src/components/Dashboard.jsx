@@ -21,9 +21,25 @@ function Dashboard (props) {
     <div key={Math.random().toString(36).substr(2, 9)} className="card">
       <h1 className="todotitle"><b>{todos.title}</b></h1>
       <p>{todos.description}</p>
-        <Link className='nav-link' to={{ pathname: `/delete/${todos.id}`, state: { title: todos.title, description: todos.description, id: todos.id } }}>
-          Delete
+      <div className = 'd-flex flex-row justify-content-between'>
+      <p className="text-center">Stage:{todos.status}</p>
+        <Link className='nav-link' to={{
+          pathname: `/delete/${todos.id}`,
+        state: {
+          title: todos.title, description: todos.description, id: todos.id, status: todos.status
+        }
+           }}>
+          <p className = 'text-danger'>Delete</p>
         </Link>
+        <Link className='nav-link' to={{
+          pathname: `/edit/${todos.id}`,
+          state: {
+             title: todos.title, description: todos.description, id: todos.id, status: todos.status
+            }
+             }}>
+        <p className = 'text-primary'>Edit</p>
+        </Link>
+        </div>
     </div>
   ))
   return (

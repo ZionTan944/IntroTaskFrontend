@@ -5,7 +5,7 @@ const initState = {
 }
 
 const userReducer = (state = initState, action) => {
-    console.log('U', action)
+    // console.log('U', action)
     if (action.type === 'setlogin') {
         return {
             ...state,
