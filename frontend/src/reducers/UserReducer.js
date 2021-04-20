@@ -9,7 +9,7 @@ const userReducer = (state = initState, action) => {
     if (action.type === actionTypes.SET_SESSION) {
         return {
             ...initState,
-            loggedIn: action.payload,
+            loggedIn: action.payload.login,
             loading: false
         }
     } else if (action.type === actionTypes.SET_LOGIN) {

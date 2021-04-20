@@ -1,4 +1,8 @@
 import axios from 'axios'
+import { getCookie } from '../csrf/csrf'
+
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 export const getData = () => {
     return dispatch => {
@@ -16,14 +20,16 @@ export const getData = () => {
     }
 
 export const postLogin = (data) => {
+  const csrfToken = getCookie('csrftoken')
     return dispatch => {
         axios.post('http://localhost:8000/backend/login',
-          data, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+          data, { headers: { 'Content-Type': 'multipart/form-data', 'X-CSRFToken': csrfToken }, withCredentials: true }
         ).then(({ response }) => {
           dispatch({
               type: actionTypes.SET_LOGIN
           })
     }).catch(error => {
+      console.log('e', error.response)
       dispatch({
       type: 'seterror',
       payload: error.response.data.error.message
@@ -46,10 +52,12 @@ export const Logout = () => {
 }
 
 export const postTodo = (data) => {
+  const csrfToken = getCookie('csrftoken')
+  console.log('gffg', csrfToken)
     return dispatch => {
         axios.post('http://localhost:8000/backend/todo',
-          data, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
-        ).then(({ response }) => {
+          data, { headers: { 'Content-Type': 'multipart/form-data', 'X-CSRFToken': csrfToken }, withCredentials: true }
+        ).then(({ data }) => {
           dispatch({
             type: actionTypes.SET_POST_TODO
           })
@@ -63,9 +71,10 @@ export const postTodo = (data) => {
 }
 
 export const deleteTodo = (id) => {
+  const csrfToken = getCookie('csrftoken')
     return dispatch => {
         axios.delete('http://localhost:8000/backend/todo/' + id,
-          { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+          { headers: { 'Content-Type': 'multipart/form-data', 'X-CSRFToken': csrfToken }, withCredentials: true }
         ).then(({ response }) => {
           dispatch({
             type: actionTypes.SET_DELETE_TODO
@@ -80,9 +89,10 @@ export const deleteTodo = (id) => {
 }
 
 export const putTodo = (data, id) => {
+  const csrfToken = getCookie('csrftoken')
     return dispatch => {
         axios.put('http://localhost:8000/backend/todo/' + id,
-          data, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true }
+          data, { headers: { 'Content-Type': 'multipart/form-data', 'X-CSRFToken': csrfToken }, withCredentials: true }
         ).then(({ response }) => {
           dispatch({
             type: actionTypes.SET_PUT_TODO
@@ -103,7 +113,7 @@ export const getSession = () => {
         ).then(({ data }) => {
           dispatch({
             type: actionTypes.SET_SESSION,
-            payload: data.data.login
+            payload: data.data
           })
         }).catch(error => {
           dispatch({
