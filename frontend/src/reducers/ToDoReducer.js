@@ -7,7 +7,6 @@ const initState = {
 }
 
 const todoReducer = (state = initState, action) => {
-    // console.log('T', action)
     if (action.type === actionTypes.SET_TODO) {
         return {
             ...state,
@@ -41,7 +40,6 @@ const todoReducer = (state = initState, action) => {
             error: action.payload
         }
     } else {
-        // console.log('return state')
         return state
     }
 }

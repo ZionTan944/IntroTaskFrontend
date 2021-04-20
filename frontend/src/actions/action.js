@@ -24,7 +24,6 @@ export const postLogin = (data) => {
               type: actionTypes.SET_LOGIN
           })
     }).catch(error => {
-        console.log('!!', error)
       dispatch({
       type: 'seterror',
       payload: error.response.data.error.message

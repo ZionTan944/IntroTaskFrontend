@@ -12,7 +12,6 @@ function Dashboard (props) {
 
   useEffect(() => {
     if (loading !== true && loggedIn === true) {
-      console.log('start')
       dispatch(getData())
     }
   })

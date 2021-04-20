@@ -9,7 +9,6 @@ function Add () {
   const loading = useSelector(state => state.todoReducer.loading)
 
   function AddData () {
-    // console.log('add', Title, Desc)
     const data = new FormData()
 
     data.append('Title', title)
@@ -22,7 +21,6 @@ function Add () {
   const [desc, setDesc] = useState('')
   const [submit, setSubmit] = useState(false)
   if (loading === false && error === null && submit === true) {
-    console.log('hi')
     return (<Redirect to={{ pathname: '/dashboard' }} />)
   }
   return (

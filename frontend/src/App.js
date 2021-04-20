@@ -10,14 +10,11 @@ function App () {
 
   const dispatch = useDispatch()
   useEffect(() => {
-      console.log('startsession')
       dispatch(getSession())
       if (loggedIn === true) {
       dispatch(getData())
     }
   })
-  console.log('l2', loggedIn, loading)
-
   if (loading === false) {
     return (
       <div className="App">

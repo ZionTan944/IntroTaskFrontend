@@ -6,7 +6,6 @@ const initState = {
     error: null
 }
 const userReducer = (state = initState, action) => {
-    // console.log('U', action)
     if (action.type === actionTypes.SET_SESSION) {
         return {
             ...initState,
@@ -28,7 +27,6 @@ const userReducer = (state = initState, action) => {
             error: action.payload
         }
     } else {
-        // console.log('return state')
         return state
     }
 }
