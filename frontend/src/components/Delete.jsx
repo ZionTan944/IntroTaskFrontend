@@ -1,34 +1,42 @@
-import React, { useState } from 'react'
-import { Redirect } from 'react-router'
+import React, { useState, useEffect } from 'react'
+import { Redirect, useParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteTodo } from '../actions/action'
-import { useLocation } from 'react-router-dom'
 
 function Delete () {
-   const { state } = useLocation()
+  const { currentid } = useParams()
   const dispatch = useDispatch()
   const error = useSelector(state => state.todoReducer.error)
-  console.log(state)
-  function removeTodo () {
-    dispatch(deleteTodo(state.id))
-    setSubmit(true)
-  }
+  const todos = useSelector(state => state.todoReducer.todos)
 
   const [submit, setSubmit] = useState(false)
+  const [todo, setTodo] = useState({ id: 0, title: 'Error', description: 'Invalid ID' })
+
+  useEffect(() => {
+    const result = todos.find(({ id }) => id === parseInt(currentid))
+    if (result) {
+    setTodo(result)
+    }
+})
+  function removeTodo () {
+    dispatch(deleteTodo(todo.id))
+    setSubmit(true)
+  }
   if (submit === true && error === null) {
     return (<Redirect to={{ pathname: '/dashboard' }} />)
   }
   return (
       <div>
-          <h1 className="todotitle"><b>{state.title}</b></h1>
-      <p>{state.description}</p>
-      <p>Stage:{state.status}</p>
+          <h1 className="todotitle"><b>{todo.title}</b></h1>
+      <p>{todo.description}</p>
+      {todo.id !== 0 && <div>
+      <p>Stage:{todo.status}</p>
     <form className="AddForm">
       <div className='submitButton'>
         <button type="button" onClick={removeTodo}>Confirm Delete</button>
       </div>
       {error !== null && <h4>{error}</h4>}
-    </form>
+    </form> </div>}
     </div>
     )
   }

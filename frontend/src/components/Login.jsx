@@ -24,7 +24,6 @@ function Login () {
 
     data.append('Username', username)
     data.append('Password', password)
-    // console.log(Username, Password)
 
     dispatch(postLogin(data))
   }
