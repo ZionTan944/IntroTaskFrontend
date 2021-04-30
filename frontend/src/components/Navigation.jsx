@@ -1,20 +1,17 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { Logout } from '../actions/action'
+import { loadLogout, loadRefresh } from '../actions/actionsaga'
 
 function Navigation (props) {
   const dispatch = useDispatch()
 
-  function setRefresh () {
-    dispatch({
-      type: 'seterror',
-      payload: null
-  })
+  function Refresh () {
+    dispatch(loadRefresh())
   }
 
   function getLogout () {
-    dispatch(Logout())
+    dispatch(loadLogout())
   }
   if (props.location.pathname === '/') {
     return (<div className="navigation"></div>)
@@ -32,7 +29,7 @@ function Navigation (props) {
                   className={`nav-item  ${props.location.pathname === '/dashboard' ? 'active' : ''
                     }`}
                 >
-                  <Link className='nav-link' to='/dashboard' onClick={() => { setRefresh() }}>
+                  <Link className='nav-link' to='/dashboard' onClick={() => { Refresh() }}>
                     Dashboard
                     <span className='sr-only'>(current)</span>
                   </Link>
@@ -41,7 +38,7 @@ function Navigation (props) {
                   className={`nav-item  ${props.location.pathname === '/add' ? 'active' : ''
                     }`}
                 >
-                  <Link className='nav-link' to='/add' onClick={() => { setRefresh() }}>
+                  <Link className='nav-link' to='/add' onClick={() => { Refresh() }}>
                     Add
                   </Link>
                 </li>

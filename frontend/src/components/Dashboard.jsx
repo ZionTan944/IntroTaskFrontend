@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getData } from '../actions/action'
+// import { getData } from '../actions/action'
+import { loadTodos } from '../actions/actionsaga'
 import { Link } from 'react-router-dom'
 
 function Dashboard (props) {
-  const loggedIn = useSelector(state => state.userReducer.loggedIn)
-  const loading = useSelector(state => state.todoReducer.loading)
-  const todos = useSelector(state => state.todoReducer.todos)
+  const loggedIn = useSelector(state => state.loggedIn[0])
+  const updated = useSelector(state => state.isUpdated)
+  const todos = useSelector(state => state.todos[1])
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (loading !== true && loggedIn === true) {
-      dispatch(getData())
+    // console.log(updated, loggedIn)
+    if (updated !== true && loggedIn === true) {
+      dispatch(loadTodos())
     }
   })
 

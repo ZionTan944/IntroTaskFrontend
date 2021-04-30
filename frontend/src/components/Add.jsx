@@ -1,26 +1,29 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { postTodo } from '../actions/action'
+import { loadPostTodos } from '../actions/actionsaga'
 
 function Add () {
   const dispatch = useDispatch()
-  const error = useSelector(state => state.todoReducer.error)
-  const loading = useSelector(state => state.todoReducer.loading)
+  const error = useSelector(state => state.error)
+  const loading = useSelector(state => state.isLoading)
+  const updated = useSelector(state => state.isUpdated)
+
+  // console.log(error, loading, updated)
 
   function AddData () {
     const data = new FormData()
 
     data.append('Title', title)
     data.append('Description', desc)
-    dispatch(postTodo(data))
-    setSubmit(true)
+    dispatch(loadPostTodos(data))
+    // setSubmit(true)
   }
 
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
-  const [submit, setSubmit] = useState(false)
-  if (loading === false && error === null && submit === true) {
+  // const [submit, setSubmit] = useState(false)
+  if (loading === false && error === null && updated === false) {
     return (<Redirect to={{ pathname: '/dashboard' }} />)
   }
   return (

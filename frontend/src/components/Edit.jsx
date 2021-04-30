@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { putTodo } from '../actions/action'
+import { loadPutTodos } from '../actions/actionsaga'
 
 function Edit () {
   const { currentid } = useParams()
   const dispatch = useDispatch()
-  const error = useSelector(state => state.todoReducer.error)
-  const todos = useSelector(state => state.todoReducer.todos)
+  const error = useSelector(state => state.error)
+  const todos = useSelector(state => state.todos[1])
 
   const [status, setStatus] = useState('Planning')
   const [submit, setSubmit] = useState(false)
@@ -24,7 +24,7 @@ function Edit () {
     const data = new FormData()
 
     data.append('Status', status)
-    dispatch(putTodo(data, todo.id))
+    dispatch(loadPutTodos(data, todo.id))
     setSubmit(true)
   }
 

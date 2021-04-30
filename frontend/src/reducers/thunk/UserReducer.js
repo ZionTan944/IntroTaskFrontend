@@ -1,4 +1,4 @@
-import { actionTypes } from '../actions/action'
+import { actionTypes } from '../../actions/action'
 
 const initState = {
     loggedIn: false,

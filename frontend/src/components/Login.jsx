@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 
 import { Redirect } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { postLogin } from '../actions/action'
+// import { postLogin } from '../actions/action'
+import { loadLogin } from '../actions/actionsaga'
 
 function Login () {
-  const error = useSelector(state => state.userReducer.error)
-  const loggedIn = useSelector(state => state.userReducer.loggedIn)
+  const error = useSelector(state => state.error)
+  const loggedIn = useSelector(state => state.loggedIn[0])
   const dispatch = useDispatch()
   const [username, SetUsername] = useState('')
   const [password, SetPassword] = useState('')
@@ -25,7 +26,7 @@ function Login () {
     data.append('Username', username)
     data.append('Password', password)
 
-    dispatch(postLogin(data))
+    dispatch(loadLogin(data))
   }
 
   if (loggedIn === true) {

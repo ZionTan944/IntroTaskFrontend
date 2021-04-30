@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Redirect, useParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteTodo } from '../actions/action'
+import { loadDeleteTodos } from '../actions/actionsaga'
 
 function Delete () {
   const { currentid } = useParams()
   const dispatch = useDispatch()
-  const error = useSelector(state => state.todoReducer.error)
-  const todos = useSelector(state => state.todoReducer.todos)
+  const error = useSelector(state => state.error)
+  const todos = useSelector(state => state.todos[1])
 
   const [submit, setSubmit] = useState(false)
   const [todo, setTodo] = useState({ id: 0, title: 'Error', description: 'Invalid ID' })
@@ -19,7 +19,7 @@ function Delete () {
     }
 })
   function removeTodo () {
-    dispatch(deleteTodo(todo.id))
+    dispatch(loadDeleteTodos(todo.id))
     setSubmit(true)
   }
   if (submit === true && error === null) {

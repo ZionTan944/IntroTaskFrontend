@@ -2,20 +2,17 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Navigation, Footer, Login, Add, Dashboard, Delete, Edit } from './components'
 import { useSelector, useDispatch } from 'react-redux'
-import { getSession, getData } from './actions/action'
+// import { getSession, getData } from './actions/action'
+import { loadSession } from './actions/actionsaga'
 
 function App () {
-  const loggedIn = useSelector(state => state.userReducer.loggedIn)
-  const loading = useSelector(state => state.userReducer.loading)
+  const loggedIn = useSelector(state => state.loggedIn[0])
+  // const loading = useSelector(state => state.userReducer.loading)
 
   const dispatch = useDispatch()
   useEffect(() => {
-      dispatch(getSession())
-      if (loggedIn === true) {
-      dispatch(getData())
-    }
+      dispatch(loadSession())
   })
-  if (loading === false) {
     return (
       <div className="App">
         <Router>
@@ -30,9 +27,6 @@ function App () {
           <Footer />
         </Router>
       </div>)
-} else {
-  return (<div>hi</div>)
-}
 }
 // }
 
